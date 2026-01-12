@@ -115,15 +115,41 @@ let WindowsEvents = SecurityEvent
 WindowsEvents
 | project TimeGenerated, Computer, AttackerIp = IpAddress, cityname, countryname, latitude, longitude
 ```
-## Create an Attack Map Visualization
+## Create an Global Attack Map Workbook
 
-Built using real attacker traffic and automatically geolocated using Sentinel's IP resolver. Visulized in a custom workbook.
+I created a custom workbook and added a map visualization using the enriched dataset. The map plotted attacker locations globally, with bubble size representing the number of failed attempts.
+
+Map configuration included:
+- Latitude field: latitude
+- Longitude field: longitude
+- Metric Value: FailedAttempts
+- Metric Label: IpAddress
+- Tooltip fields: IpAddress, city, country, coun
 
 img
 
-Results
+## Results
 
 img 
 
-After nearly 48 hours of 
+After nearly 48 hours of my honeypot VM exposed to the internet, I received over 60,000 brute force attempts! A vast majortiy of events came from IPs in Jordansow, Poland and Ranchos, Argentina.
 
+## Create an Anomaly-Based Detection Rule
+
+To operationalize the detection, I built a Sentinel Analytics Rule using a baseline‑and‑threshold model.
+Final detection logic:
+
+img
+
+This rule triggers when an attacker exceeds the expected number of failed RDP attempts within a 1‑hour window.
+
+## Conclusion
+
+This project demonstrates a complete SOC workflow:
+- 	Real attacker traffic collected from a honeypot
+- 	Enriched with geolocation intelligence
+- 	Visualized on a global attack map
+-  Detected using anomaly‑based logic
+- 	Ready for incident investigation and triage
+
+It highlights practical, hands‑on experience with Microsoft Sentinel, KQL, threat detection, and security monitoring 
