@@ -23,3 +23,57 @@ The result is a complete, real‑world SOC case study that showcases threat dete
 - Understanding of RDP brute‑force behavior and attacker patterns
 - SOC investigation fundamentals and incident triage
 
+## Environment Setup
+
+1. Create a Resource Group
+
+   - Region: Choose one close to you
+
+img
+
+2. Deploy a Windows Honeypot VM
+
+   - This VM will be intentionally exposed to the internet. The Windows firewall was disabled.
+
+  img
+  
+3. Create a new VNet
+
+img
+
+The Network Security Group (NSG) was configured with an inbound rule allowing RDP (port 3389) from any source. This setup will allow the Honeypot to attract brute-force login attempts from external actors
+
+img
+
+## Set up Microsoft Sentinel
+
+I already had a Log Analytic Workspace that I utilized for this lab. However, if you do need to create your own and set up Sentinel, please follow these steps:
+
+1. Create a Log Analytics Workspace
+
+   - In Azure -> select Log Analytic Workspace
+   - Region: same as VM
+  
+2. Enable Sentinel
+
+   - In Azure -> Search "Microsoft Sentinel" -> Create -> Select your workspace
+  
+3. Connect Data Sources
+   In Microsoft Defender:
+
+   - Select Microsoft Sentinel -> Content Management -> Content hub
+   - Search and install Windows Security Events. This solution contains the data connector Windows Security Events via AMA
+   - Connect your VM
+   - You should now see logs flowing into the table 'SecurityEvent'
+  
+  ## How to confirm Logs are Flowing
+  Run this KQL query in Sentinel:
+
+  ```kusto
+SecurityEvent
+| where  TimeGenerated > ago(30m)
+| take 50
+```
+
+- If you see Event IDs like 4624 and 4625, you're connected.
+
