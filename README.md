@@ -71,9 +71,59 @@ I already had a Log Analytic Workspace that I utilized for this lab. However, if
 
   ```kusto
 SecurityEvent
-| where  TimeGenerated > ago(30m)
-| take 50
+| where  TimeGenerated > ago(1h)
+| take 20
 ```
 
 - If you see Event IDs like 4624 and 4625, you're connected.
+
+## Analyze Attacks Using KQL
+
+- Utilized KQL to Query for Failed RDP Login attempts (Event ID = 4625)
+
+img
+
+```kusto
+SecurityEvent
+| where EventID == 4625
+| project TimeGenerated, Account, Computer, EventID, Activity, IPAddress
+```
+- Count Attacks by IP
+
+img
+
+ ```kusto
+SecurityEvent
+| where EventID == 4625
+| summarize Attempts = count() by IpAddress
+| order by Attempts desc
+```
+
+## Enrich IPs with Geolocation (Watchlist) 
+
+Uploaded a watchlist mapping IPs to geolocation data and joined it with failed login events for enrichment.
+
+img
+
+```kusto
+let GeoIPDB_FULL = _GetWatchlist("geoip");
+let WindowsEvents = SecurityEvent
+    | where IpAddress == <attacker IP address>
+    | where EventID == 4625
+    | order by TimeGenerated desc
+    | evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network);
+WindowsEvents
+| project TimeGenerated, Computer, AttackerIp = IpAddress, cityname, countryname, latitude, longitude
+```
+## Create an Attack Map Visualization
+
+Built using real attacker traffic and automatically geolocated using Sentinel's IP resolver. Visulized in a custom workbook.
+
+img
+
+Results
+
+img 
+
+After nearly 48 hours of 
 
