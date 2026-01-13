@@ -29,21 +29,21 @@ The result is a complete, real‑world SOC case study that showcases threat dete
 
    - Region: Choose one close to you
 
-img
+<img width="970" height="660" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Resource%20group.png?raw=true" />
 
 2. Deploy a Windows Honeypot VM
 
    - This VM will be intentionally exposed to the internet. The Windows firewall was disabled.
 
-  img
+<img width= "970" height="760" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Create%20VM.png?raw=true" />
   
 3. Create a new VNet
 
-img
+<img width= "970" height="769" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Create%20VNET.png?raw=true" />
 
-The Network Security Group (NSG) was configured with an inbound rule allowing RDP (port 3389) from any source. This setup will allow the Honeypot to attract brute-force login attempts from external actors
+The Network Security Group (NSG) was configured with an inbound rule allowing RDP (port 3389) from any source. This setup will allow the Honeypot to attract brute-force login attempts from external actors.
 
-img
+<img width= "970" height="769" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/VNET%20settings.png?raw=true" />
 
 ## Set up Microsoft Sentinel
 
@@ -65,6 +65,8 @@ I already had a Log Analytic Workspace that I utilized for this lab. However, if
    - Search and install Windows Security Events. This solution contains the data connector Windows Security Events via AMA
    - Connect your VM
    - You should now see logs flowing into the table 'SecurityEvent'
+
+img
   
   ## How to confirm Logs are Flowing
   Run this KQL query in Sentinel:
@@ -81,7 +83,7 @@ SecurityEvent
 
 - Utilized KQL to Query for Failed RDP Login attempts (Event ID = 4625)
 
-img
+<img width= "1000" height="800" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/KQL%20Query%20-%20Microsoft%20Defender.png?raw=true" />
 
 ```kusto
 SecurityEvent
@@ -90,7 +92,7 @@ SecurityEvent
 ```
 - Count Attacks by IP
 
-img
+<img width= "1000" height="800" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/KQL%20Query%20count%20results.png?raw=true" />
 
  ```kusto
 SecurityEvent
@@ -103,7 +105,7 @@ SecurityEvent
 
 Uploaded a watchlist mapping IPs to geolocation data and joined it with failed login events for enrichment.
 
-img
+<img width= "1000" height="800" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Mapping%20KQL.png?raw=true" />
 
 ```kusto
 let GeoIPDB_FULL = _GetWatchlist("geoip");
@@ -124,7 +126,7 @@ Map configuration included:
 - Longitude field: longitude
 - Metric Value: FailedAttempts
 - Metric Label: IpAddress
-- Tooltip fields: IpAddress, city, country, coun
+- Tooltip fields: IpAddress, city, country, count
 
 img
 
