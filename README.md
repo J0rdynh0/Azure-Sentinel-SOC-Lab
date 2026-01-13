@@ -79,7 +79,7 @@ SecurityEvent
 
 - If you see Event IDs like 4624 and 4625, you're connected.
 
-## Analyze Attacks Using KQL
+# Analyze Attacks Using KQL
 
 - Utilized KQL to Query for Failed RDP Login attempts (Event ID = 4625)
 
@@ -101,7 +101,7 @@ SecurityEvent
 | order by Attempts desc
 ```
 
-## Enrich IPs with Geolocation (Watchlist) 
+# Enrich IPs with Geolocation (Watchlist) 
 
 Uploaded a watchlist mapping IPs to geolocation data and joined it with failed login events for enrichment.
 
@@ -117,7 +117,7 @@ let WindowsEvents = SecurityEvent
 WindowsEvents
 | project TimeGenerated, Computer, AttackerIp = IpAddress, cityname, countryname, latitude, longitude
 ```
-## Create an Global Attack Map Workbook
+# Create a Global Attack Map Workbook
 
 I created a custom workbook and added a map visualization using the enriched dataset. The map plotted attacker locations globally, with bubble size representing the number of failed attempts.
 
@@ -128,14 +128,14 @@ Map configuration included:
 - Metric Label: IpAddress
 - Tooltip fields: IpAddress, city, country, count
 
-## Results
+# Results
 <div align="center">
 <img width= "1000" height="800" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Attack%20Map.png?raw=true" />
 </div>
 
 After nearly 48 hours of my honeypot VM exposed to the internet, I received over 60,000 brute force attempts! A vast majortiy of events came from IPs in Jordansow, Poland and Ranchos, Argentina.
 
-## Create an Anomaly-Based Detection Rule
+# Create an Anomaly-Based Detection Rule
 
 To operationalize the detection, I built a Sentinel Analytics Rule using a baseline‑and‑threshold model.
 Final detection logic:
@@ -144,7 +144,7 @@ Final detection logic:
 
 This rule triggers when an attacker exceeds the expected number of failed RDP attempts within a 1‑hour window.
 
-## Conclusion
+# Conclusion
 
 This project demonstrates a complete SOC workflow:
 - 	Real attacker traffic collected from a honeypot
