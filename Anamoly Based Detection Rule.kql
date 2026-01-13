@@ -1,0 +1,7 @@
+let baseline = 4; //Average number of failed logins to consider as normal
+let threshold = 2; //Threshold factor to identify anomaly
+SecurityEvent
+| where EventID == 4625 //Event ID for failed logins for a windows security log
+| summarize CountFailedLogins  = count() by AccountName, IpAddress, bin(TimeGenerated, 1h) //Count failed logins per account
+| where CountFailedLogins > (baseline * threshold) //Filter accounts with failed logins exceeding the threshold
+| project TimeGenerated, AccountName, CountFailedLogins, IpAddress, Anomaly = (CountFailedLogins > (baseline * threshold))
