@@ -66,7 +66,7 @@ I already had a Log Analytic Workspace that I utilized for this lab. However, if
    - Connect your VM
    - You should now see logs flowing into the table 'SecurityEvent'
 
-img
+<img width= "900" height="576" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Windows%20Security%20Events.png?raw=true"/>
   
   ## How to confirm Logs are Flowing
   Run this KQL query in Sentinel:
@@ -128,11 +128,10 @@ Map configuration included:
 - Metric Label: IpAddress
 - Tooltip fields: IpAddress, city, country, count
 
-img
-
 ## Results
-
-img 
+<div align="center">
+<img width= "1000" height="800" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Attack%20Map.png?raw=true" />
+</div>
 
 After nearly 48 hours of my honeypot VM exposed to the internet, I received over 60,000 brute force attempts! A vast majortiy of events came from IPs in Jordansow, Poland and Ranchos, Argentina.
 
@@ -141,7 +140,7 @@ After nearly 48 hours of my honeypot VM exposed to the internet, I received over
 To operationalize the detection, I built a Sentinel Analytics Rule using a baseline‑and‑threshold model.
 Final detection logic:
 
-img
+<img width= "970" height="677" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Analytic%20Rule.png?raw=true" />
 
 This rule triggers when an attacker exceeds the expected number of failed RDP attempts within a 1‑hour window.
 
@@ -153,5 +152,3 @@ This project demonstrates a complete SOC workflow:
 - 	Visualized on a global attack map
 -  Detected using anomaly‑based logic
 - 	Ready for incident investigation and triage
-
-It highlights practical, hands‑on experience with Microsoft Sentinel, KQL, threat detection, and security monitoring 
