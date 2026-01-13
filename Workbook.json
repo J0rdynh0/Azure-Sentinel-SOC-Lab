@@ -1,0 +1,31 @@
+{
+    "type": 3,
+    "content": {
+        "version": "KqlItem/1.0",
+        "query": "let GeoIPDB_FULL = _GetWatchlist(\"geoip\");\nSecurityEvent\n| where EventID == 4625\n| where isnotempty(IpAddress)\n| evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network)\n| summarize FailedAttempts = count() \n      by IpAddress, cityname, countryname, latitude, longitude\n| order by FailedAttempts desc",
+        "size": 2,
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "title": "SecurityEvent",
+        "visualization": "map",
+        "mapSettings": {
+            "locInfo": "LatLong",
+            "latitude": "latitude",
+            "longitude": "longitude",
+            "labelSettings": "IpAddress",
+            "itemColorSettings": {
+                "type": "heatmap",
+                "nodeColorField": "IpAddress",
+                "colorAggregation": "Max",
+                "heatmapPalette": "redBright"
+            },
+            "legendMetric": "FailedAttempts",
+            "sizeSettings": "FailedAttempts"
+        },
+        "headingLevel": 3,
+        "crossComponentResources": [
+            "/subscriptions/918c44dc-3e11-48e1-bb95-97c6c8ea570f/resourcegroups/sentinelrg/providers/microsoft.operationalinsights/workspaces/sentinellogworkspace"
+        ]
+    },
+    "name": "query - 2"
+}
