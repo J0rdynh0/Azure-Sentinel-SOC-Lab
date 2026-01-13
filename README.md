@@ -23,21 +23,21 @@ The result is a complete, real‑world SOC case study that showcases threat dete
 - Understanding of RDP brute‑force behavior and attacker patterns
 - SOC investigation fundamentals and incident triage
 
-## Environment Setup
+# Environment Setup
 
-1. Create a Resource Group
+1. ## Create a Resource Group
 
    - Region: Choose one close to you
 
 <img width="970" height="660" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Resource%20group.png?raw=true" />
 
-2. Deploy a Windows Honeypot VM
+2. ## Deploy a Windows Honeypot VM
 
    - This VM will be intentionally exposed to the internet. The Windows firewall was disabled.
 
 <img width= "970" height="760" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Create%20VM.png?raw=true" />
   
-3. Create a new VNet
+3. ## Create a new VNet
 
 <img width= "970" height="769" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Create%20VNET.png?raw=true" />
 
@@ -45,7 +45,7 @@ The Network Security Group (NSG) was configured with an inbound rule allowing RD
 
 <img width= "970" height="769" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/VNET%20settings.png?raw=true" />
 
-## Set up Microsoft Sentinel
+# Set up Microsoft Sentinel
 
 I already had a Log Analytic Workspace that I utilized for this lab. However, if you do need to create your own and set up Sentinel, please follow these steps:
 
