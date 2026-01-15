@@ -121,14 +121,7 @@ WindowsEvents
 
 I created a custom workbook and added a map visualization using the enriched dataset. The map plotted attacker locations globally, with bubble size representing the number of failed attempts.
 
-Map configuration included:
-- Latitude field: latitude
-- Longitude field: longitude
-- Metric Value: FailedAttempts
-- Metric Label: IpAddress
-- Tooltip fields: IpAddress, city, country, count
-
-# Results
+## Results
 <div align="center">
 <img width= "1000" height="800" alt="image" src= "https://github.com/J0rdynh0/Azure-Sentinel-SOC-Lab/blob/main/images/Attack%20Map.png?raw=true" />
 </div>
